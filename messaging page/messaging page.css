@@ -45,7 +45,7 @@ body, html {
     background-color: #1abc9c;
 }
 
-/* Chat Window Styling */
+/* Main Chat Window Styling */
 .chat-window {
     display: flex;
     flex-direction: column;
@@ -53,9 +53,9 @@ body, html {
     background-color: #ecf0f1;
 }
 
-/* Chat Header */
-.chat-header {
-    background-color: #3498db;
+/* Group Header */
+.group-header {
+    background-color: #2ecc71;
     color: white;
     padding: 20px;
     text-align: center;
@@ -67,6 +67,12 @@ body, html {
     padding: 20px;
     overflow-y: auto;
     background-color: #f1f1f1;
+}
+
+/* Sender Label */
+.sender {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 /* Individual Messages */

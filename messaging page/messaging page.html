@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Application</title>
+    <title>Group Chat</title>
     <link rel="stylesheet" href="messaging page.css">
 </head>
 <body>
     <div class="chat-app">
-        <!-- Sidebar (Contacts or Channels) -->
+        <!-- Sidebar (Members) -->
         <div class="sidebar">
-            <h2>Contacts</h2>
+            <h2>Group Members</h2>
             <ul>
+                <li>Aditya Bahe (You)</li>
                 <li>John Doe</li>
                 <li>Jane Smith</li>
                 <li>Mike Ross</li>
@@ -20,21 +21,89 @@
 
         <!-- Main Chat Window -->
         <div class="chat-window">
-            <div class="chat-header">
-                <h3>John Doe</h3>
+            <!-- Group Name -->
+            <div class="group-header">
+                <h3>Group Name: Team Alpha</h3>
             </div>
 
-            <div class="chat-messages">
-                <div class="message from-them">Hello, how are you?</div>
-                <div class="message from-me">I'm fine, thanks!</div>
+            <div class="chat-messages" id="chat-messages">
+                <!-- Chat Messages will be added here dynamically -->
             </div>
 
             <!-- Message Input -->
             <div class="chat-input">
-                <input type="text" placeholder="Type a message..." />
-                <button>Send</button>
+                <input type="text" id="message-input" placeholder="Type a message..." />
+                <button onclick="sendMessage()">Send</button>
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to handle sending messages
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const messageText = messageInput.value.trim();
+
+            if (messageText !== "") {
+                // Call function to add the message with 'You' as the sender
+                addMessage('Aditya Bahe (You)', messageText, 'from-me');
+
+                // Clear the input field
+                messageInput.value = '';
+
+                // Simulate receiving a message from a group member after 1 second
+                setTimeout(() => {
+                    receiveMessage();
+                }, 1000);
+            }
+        }
+
+        // Function to receive a message from other users
+        function receiveMessage() {
+            const groupMembers = ['John Doe', 'Jane Smith', 'Mike Ross'];
+            const randomMember = groupMembers[Math.floor(Math.random() * groupMembers.length)];
+            const responses = ['Hello!', 'How are you?', 'Good to hear!', 'What’s up?', 'See you soon!'];
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+
+            // Add received message with sender's name
+            addMessage(randomMember, randomResponse, 'from-them');
+        }
+
+        // Function to add a message with a sender's name
+        function addMessage(sender, messageText, className) {
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Create a sender label
+            const senderLabel = document.createElement('div');
+            senderLabel.classList.add('sender');
+            senderLabel.textContent = sender;
+
+            // Create a message div
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', className);
+            messageDiv.textContent = messageText;
+
+            // Append the sender label and message to the chat area
+            chatMessages.appendChild(senderLabel);
+            chatMessages.appendChild(messageDiv);
+
+            // Auto-scroll to the bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add an event listener to detect Enter key press
+        document.getElementById('message-input').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent newline in the input
+                sendMessage(); // Send message
+            }
+        });
+
+        // Auto scroll to the latest message on page load
+        window.onload = function() {
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+    </script>
 </body>
 </html>
