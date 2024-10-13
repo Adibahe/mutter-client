@@ -9,17 +9,8 @@
 
     <main class="main-content">
         <div class="content-wrapper">
-            <div class="nickname-column">
-                <div class="nickname-field-container">
-                    <form class="nickname-field">
-                        <label for="nickname" class="nickname-label">Enter a Nickname</label>
-                        <input type="text" id="nickname" class="nickname-input" placeholder="Nickname will be visible to others."
-                            aria-label="Enter a Nickname" />
-                    </form>
-                </div>
-            </div>
             <div class="tagline-column">
-                <h3 class="tagline">Private, secure messaging. Now for everyone.</h3>
+                <h3 class="tagline">Private, secure messaging.<br> Now for everyone.</h3>
             </div>
         </div>
     </main>
@@ -39,9 +30,9 @@
                             <label for="participants" class="field-label">Enter the no. of participants</label>
                             <br>
                             <input type="number" id="participants" class="field-input" placeholder=" Value"
-                                aria-label="Enter the number of participants" style ="width:30%; "/>
+                                aria-label="Enter the number of participants" style ="width:30%; " min="1"/>
                         </div>
-                        <button type="submit" class="create-group-button">Create new Group</button>
+                        <button type="button" class="create-group-button" onclick="handleCreateGroup(this)">Create new Group</button>
                     </form>
                 </div>
             </div>
@@ -57,7 +48,8 @@
                         <form>
                             <input type="text" id="group-code" class="field-input visually-hidden"
                                 aria-label="Enter a code or link to join a group" placeholder="Enter code or link to join" />
-                            <button type="submit" class="join-button">Join</button>
+                                <button type="button" class="join-button" onclick="handleJoinGroup(this)">Join</button>
+
                         </form>
                         </div>
                     </div>
@@ -66,3 +58,5 @@
         </div>
     </section>
 </section>
+<script src="validation.js"></script>
+<script src="handleCreationAndJoining.js"></script>

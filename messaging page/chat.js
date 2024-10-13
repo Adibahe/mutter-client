@@ -1,3 +1,4 @@
+
 // Function to fetch new members from the API
 async function fetchNewMembersFromAPI() {
     try {
@@ -65,7 +66,7 @@ async function addNewMessages() {
         if (!document.getElementById(`message-${message.id}`)) { // Ensure no duplicate messages
             const messageElement = document.createElement('div');
             messageElement.id = `message-${message.id}`;
-            messageElement.className = message.sender === 'Aditya Bahe' ? 'message from-me' : 'message from-them';
+            messageElement.className = message.sender === 'me' ? 'message from-me' : 'message from-them';
             messageElement.innerHTML = `<span class="sender-label">${message.sender}</span> ${message.text}`;
 
             // Append the message to the chat window
@@ -114,7 +115,7 @@ async function sendMessage() {
 
         messageElement.className = 'message from-me'; // Class based on the sender
         messageElement.innerHTML = `
-            <span class="sender-label">Aditya Bahe (You)</span>
+            <span class="sender-label">me</span>
             <div class="message-text">${messageText}</div>`;
 
         // Append the message to the chat window
@@ -125,10 +126,9 @@ async function sendMessage() {
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         // Send the message to the API
-        await postMessageToAPI({ sender: 'Aditya Bahe', text: messageText });
+        await postMessageToAPI({ sender: 'me', text: messageText });
     }
 }
-
 
 // Allow sending messages by pressing Enter
 document.getElementById('message-input').addEventListener('keypress', function(event) {
@@ -136,4 +136,35 @@ document.getElementById('message-input').addEventListener('keypress', function(e
         sendMessage();
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const groupName = sessionStorage.getItem('groupName');
+    console.log('Group name:', groupName);  // Debugging: check if groupName is stored
+
+    // Display the group name if it's available
+    const groupHeader = document.querySelector('.group-details h3');
+    if (groupHeader && groupName) {
+        groupHeader.textContent = groupName;
+    } else {
+        console.error('Group header or group name is missing!');
+    }
+});
+
+
+window.onbeforeunload = function(event) {
+
+    event.preventDefault();
+    event.returnValue = "Are you sure you want to leave this page? Unsaved changes will be lost.";
+
+    // Prepare the API call
+    const data = JSON.stringify({ userId: 'user123', status: 'left' });
+    const url = 'https://your-api-url.com/user-status';
+
+    // Use navigator.sendBeacon to send the data
+    navigator.sendBeacon(url, data);
+};
+
+
+
+
 

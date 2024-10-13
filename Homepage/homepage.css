@@ -34,6 +34,8 @@
 
 .content-wrapper {
     display: flex;
+    position: relative;
+    left: 51%;
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 30px;
@@ -110,6 +112,8 @@
 }
 
 .group-creation-container {
+    position: relative;
+    bottom: 29%;
     border-radius: 28px;
     background-color: #fff;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);

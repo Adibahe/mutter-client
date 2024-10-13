@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lobby_style.css">
+    <title>Lobby Page</title>
+</head>
+<body>
+    <div class="lobby-page">
+        <header>
+            <h1 class="lobby-title">Lobby</h1>
+            <p class="host-message">Waiting for members to join...</p>
+        </header>
+        <main>
+            <div class="member-list">
+                <h2>Joined Members:</h2>
+                <ul id="members">
+                    <!-- Members will be dynamically added here -->
+                </ul>
+            </div>
+            <button id="start-session-button" class="start-session-button" disabled>Start Session</button>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group Chat</title>
     <link rel="stylesheet" href="messaging page.css">
+    
+
 </head>
 <body>
     <div class="chat-app">
@@ -14,11 +16,11 @@
             <ul id="member-list">
                 <li>
                     <div class="member-icon"></div>
-                    <span>Aditya Bahe (You)</span>
+                    <span>me</span>
                 </li>
             </ul>
         </div>
-
+        
         <!-- Main Chat Window -->
         <div class="chat-window">
             <!-- Group Header -->
@@ -26,14 +28,26 @@
                 <div class="group-info">
                     <div class="group-icon" id="group-image"></div>
                     <div class="group-details">
-                        <h3>Group Name: Team Alpha</h3>
+                        <h3></h3>
                         <p><span id="member-count">1 member</span></p>
                     </div>
                 </div>
                 <div class="group-options">
-                    <span class="dot"></span>
+                    <span class="dot"><div class="group-options">
+                        <!-- Three-dot button -->
+                        <button class="info-btn" onclick="toggleInfoMenu()">⋮</button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div id="info-menu" class="info-menu" style="display: none;">
+                            <p>User ID: <span id="user-id"></span></p>
+                            <button class="leave-btn" onclick="confirmLeave()">Leave Group</button>
+                        </div>
+                    </div></span>
                 </div>
+                
             </div>
+
+            
 
             <div class="chat-messages" id="chat-messages">
                 <!-- Chat Messages will be added here dynamically -->
@@ -41,13 +55,18 @@
 
             <!-- Message Input -->
             <div class="chat-input">
-                <input type="text" id="message-input" placeholder="Type a message..." />
+                <button id="emoji-btn">😀</button>
+                <input type="text" id="message-input" placeholder="Type a message..." data-emojiable="true"/>
                 <button onclick="sendMessage()">Send</button>
+            </div>
+            
             </div>
         </div>
     </div>
-
-    <script src="test.js"></script>
+    
+    
+    <script src="chat.js"></script>
+    <script src="leaving_the_page.js"></script>
 
 </body>
 </html>
