@@ -1,52 +1,68 @@
-// Mock data for testing purposes
-const mockMembers = [
-    { id: 2, name: 'John Doe' },
-    { id: 3, name: 'Jane Smith' },
-    { id: 4, name: 'Mike Ross' }
+// Mock data for testing
+let members = [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" },
+    { id: 3, name: "Charlie" }
 ];
 
-const mockMessages = [
-    { id: 1, sender: 'John Doe', text: 'Hello everyone!' },
-    { id: 2, sender: 'Jane Smith', text: 'Hey, how are you?' },
-    { id: 3, sender: 'Mike Ross', text: 'What’s the plan for today?' }
+let messages = [
+    { id: 1, sender: "Alice", text: "Hello!" },
+    { id: 2, sender: "Bob", text: "Hi Alice!" }
 ];
 
-let addedMemberIndex = 0; // Tracks which member has been added
-let addedMessageIndex = 0; // Tracks which message has been added
-
-// Simulate fetching new members (Mock function for testing)
-function fetchNewMembersMock() {
-    const newMembers = [];
-
-    // Simulate adding one new member at a time
-    if (addedMemberIndex < mockMembers.length) {
-        newMembers.push(mockMembers[addedMemberIndex]);
-        addedMemberIndex++;
-    }
-
-    return newMembers;
+// Simulate a delay to mimic network latency
+function simulateNetworkDelay(data) {
+    return new Promise((resolve) => {
+        setTimeout(() => resolve(data), 500);  // Simulated delay of 500ms
+    });
 }
 
-// Simulate fetching new messages (Mock function for testing)
-function fetchNewMessagesMock() {
-    const newMessages = [];
-
-    // Simulate adding one new message at a time
-    if (addedMessageIndex < mockMessages.length) {
-        newMessages.push(mockMessages[addedMessageIndex]);
-        addedMessageIndex++;
+// Fetch new members from the mock "API"
+async function fetchNewMembersFromAPI() {
+    try {
+        return await simulateNetworkDelay({ members });  // Simulate API response with mock data
+    } catch (error) {
+        console.error('Error fetching members:', error);
+        return { members: [] };
     }
+}
 
-    return newMessages;
+// Fetch new messages from the mock "API"
+async function fetchNewMessagesFromAPI() {
+    try {
+        return await simulateNetworkDelay({ messages });  // Simulate API response with mock data
+    } catch (error) {
+        console.error('Error fetching messages:', error);
+        return { messages: [] };
+    }
+}
+
+// Post a new message to the mock "API"
+async function postMessageToAPI(message) {
+    try {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (message.text && message.sender) {
+                    message.id = messages.length + 1;  // Assign a new ID
+                    messages.push(message);  // Add the new message to the messages array
+                    resolve({ success: true, message });  // Simulate success response
+                } else {
+                    reject("Invalid message format");  // Simulate failure response
+                }
+            }, 500);  // Simulated network delay
+        });
+    } catch (error) {
+        console.error('Error sending message:', error);
+    }
 }
 
 // Function to dynamically add new members to the member list
-function addNewMembers() {
-    const newMembers = fetchNewMembersMock(); // Simulate API response
+async function addNewMembers() {
+    const newMembers = await fetchNewMembersFromAPI(); // API response
     const memberList = document.getElementById('member-list');
-    let memberCount = document.getElementById('member-list').children.length;
+    let memberCount = memberList.children.length;
 
-    newMembers.forEach(member => {
+    newMembers.members.forEach(member => {
         if (!document.getElementById(`member-${member.id}`)) {
             const memberElement = document.createElement('li');
             memberElement.id = `member-${member.id}`;
@@ -63,15 +79,15 @@ function addNewMembers() {
 }
 
 // Function to dynamically add new messages to the chat window
-function addNewMessages() {
-    const newMessages = fetchNewMessagesMock(); // Simulate API response
+async function addNewMessages() {
+    const newMessages = await fetchNewMessagesFromAPI(); // API response
     const chatMessages = document.getElementById('chat-messages');
 
-    newMessages.forEach(message => {
+    newMessages.messages.forEach(message => {
         if (!document.getElementById(`message-${message.id}`)) { // Ensure no duplicate messages
             const messageElement = document.createElement('div');
             messageElement.id = `message-${message.id}`;
-            messageElement.className = message.sender === 'Aditya Bahe' ? 'message from-me' : 'message from-them';
+            messageElement.className = message.sender === 'me' ? 'message from-me' : 'message from-them';
             messageElement.innerHTML = `<span class="sender-label">${message.sender}</span> ${message.text}`;
 
             // Append the message to the chat window
@@ -83,12 +99,8 @@ function addNewMessages() {
     });
 }
 
-// Continuously check for new members and messages every 5 seconds (can be adjusted)
-setInterval(addNewMembers, 1000);
-setInterval(addNewMessages, 1000);
-
 // Function to send a message
-function sendMessage() {
+async function sendMessage() {
     const messageInput = document.getElementById('message-input');
     const messageText = messageInput.value.trim();
 
@@ -97,7 +109,9 @@ function sendMessage() {
         const messageElement = document.createElement('div');
 
         messageElement.className = 'message from-me'; // Class based on the sender
-        messageElement.innerHTML = `<span class="sender-label">Aditya Bahe (You)</span> ${messageText}`;
+        messageElement.innerHTML = `
+            <span class="sender-label">me</span>
+            <div class="message-text">${messageText}</div>`;
 
         // Append the message to the chat window
         chatMessages.appendChild(messageElement);
@@ -106,8 +120,8 @@ function sendMessage() {
         messageInput.value = '';
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
-        // Optionally, send the message to the API
-        // You can create a function to POST the new message to the API
+        // Send the message to the mock API
+        await postMessageToAPI({ sender: 'me', text: messageText });
     }
 }
 
@@ -115,5 +129,23 @@ function sendMessage() {
 document.getElementById('message-input').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
         sendMessage();
+    }
+});
+
+// Continuously check for new members and messages every 5 seconds
+setInterval(addNewMembers, 1000);
+setInterval(addNewMessages, 1000);
+
+// On page load, set group name
+document.addEventListener('DOMContentLoaded', function() {
+    const groupName = sessionStorage.getItem('groupName');
+    console.log('Group name:', groupName);  // Debugging: check if groupName is stored
+
+    // Display the group name if it's available
+    const groupHeader = document.querySelector('.group-details h3');
+    if (groupHeader && groupName) {
+        groupHeader.textContent = groupName;
+    } else {
+        console.error('Group header or group name is missing!');
     }
 });
