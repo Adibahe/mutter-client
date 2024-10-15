@@ -1,19 +1,26 @@
 // Mock data for testing
 let members = [
-    { id: 1, name: "Alice" },
-    { id: 2, name: "Bob" },
-    { id: 3, name: "Charlie" }
+    { id: 1, name: "Luffy" },
+    { id: 2, name: "Zoro" },
+    { id: 3, name: "Nami" },
+    { id: 4, name: "Sanji" },
+    { id: 5, name: "Chopper" }
 ];
 
 let messages = [
-    { id: 1, sender: "Alice", text: "Hello!" },
-    { id: 2, sender: "Bob", text: "Hi Alice!" }
+    { id: 1, sender: "Luffy", text: "I'm hungry! When's the next meal?" },
+    { id: 2, sender: "Sanji", text: "Hold on, Luffy! I'm cooking your favorite meat dish." },
+    { id: 3, sender: "Zoro", text: "Luffy, you should focus on training instead of eating all the time." },
+    { id: 4, sender: "Nami", text: "Zoro, you're the last person who should talk about focus." },
+    { id: 5, sender: "Chopper", text: "Luffy, you should eat properly to stay healthy!" },
+    { id: 6, sender: "Luffy", text: "Thanks, Chopper! You're the best doctor!" },
+    { id: 7, sender: "Sanji", text: "Dinner’s ready! Time to eat, everyone!" }
 ];
 
 // Simulate a delay to mimic network latency
 function simulateNetworkDelay(data) {
     return new Promise((resolve) => {
-        setTimeout(() => resolve(data), 500);  // Simulated delay of 500ms
+        setTimeout(() => resolve(data), 2000);  // Simulated delay of 2 seconds
     });
 }
 
@@ -49,7 +56,7 @@ async function postMessageToAPI(message) {
                 } else {
                     reject("Invalid message format");  // Simulate failure response
                 }
-            }, 500);  // Simulated network delay
+            }, 1000);  // Simulated network delay of 1 second
         });
     } catch (error) {
         console.error('Error sending message:', error);
@@ -58,7 +65,7 @@ async function postMessageToAPI(message) {
 
 // Function to dynamically add new members to the member list
 async function addNewMembers() {
-    const newMembers = await fetchNewMembersFromAPI(); // API response
+    const newMembers = await fetchNewMembersFromAPI(); // API response with simulated delay
     const memberList = document.getElementById('member-list');
     let memberCount = memberList.children.length;
 
@@ -80,7 +87,7 @@ async function addNewMembers() {
 
 // Function to dynamically add new messages to the chat window
 async function addNewMessages() {
-    const newMessages = await fetchNewMessagesFromAPI(); // API response
+    const newMessages = await fetchNewMessagesFromAPI(); // API response with simulated delay
     const chatMessages = document.getElementById('chat-messages');
 
     newMessages.messages.forEach(message => {
@@ -133,8 +140,8 @@ document.getElementById('message-input').addEventListener('keypress', function(e
 });
 
 // Continuously check for new members and messages every 5 seconds
-setInterval(addNewMembers, 1000);
-setInterval(addNewMessages, 1000);
+setInterval(addNewMembers, 5000);
+setInterval(addNewMessages, 5000);
 
 // On page load, set group name
 document.addEventListener('DOMContentLoaded', function() {
