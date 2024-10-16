@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with SSE</title>
+    <style>
+        /* Basic styles for testing */
+        .chat-messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+        .message { margin: 10px 0; }
+        .message.from-me { text-align: right; }
+        .message.from-them { text-align: left; }
+        .member-list { list-style-type: none; }
+    </style>
+</head>
+<body>
+    <h1>Real-time Chat with SSE</h1>
+
+    <!-- Group Information -->
+    <div class="group-details">
+        <h3>Group Name: <span id="group-name"></span></h3>
+    </div>
+
+    <!-- Member List -->
+    <h3>Members (<span id="member-count">0</span>):</h3>
+    <ul id="member-list" class="member-list"></ul>
+
+    <!-- Chat Messages -->
+    <h3>Messages</h3>
+    <div id="chat-messages" class="chat-messages"></div>
+
+    <!-- Message Input -->
+    <input type="text" id="message-input" placeholder="Type a message..." />
+
+    <!-- JavaScript File -->
+    <script src="chat(SSE reciving).js"></script>
+</body>
+</html>

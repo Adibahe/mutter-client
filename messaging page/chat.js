@@ -1,20 +1,18 @@
-
+const URL = 'http://localhost:3000/events';
 // Function to fetch new members from the API
-async function fetchNewMembersFromAPI() {
-    try {
-        // Replace the URL with your actual API endpoint
-        const response = await fetch('https://your-api-url.com/members');
-        
-        if (!response.ok) {
-            throw new Error('Failed to fetch new members');
-        }
 
-        const data = await response.json();
-        return data.members; // Assuming the API returns a "members" array
-    } catch (error) {
-        console.error('Error fetching members:', error);
-        return [];
-    }
+async function fetchNewMembersFromAPI() {
+    const eventsrc = new EventSource(URL + '/members');
+
+    eventsrc.onmessage = function(event){
+        const data = JSON.parse(event.data);
+        console.log('added new member',data.message)
+        return data.member;
+    };
+
+    eventsrc.onerror = function(error) {
+        console.error('Error with SSE connection:', error);
+    };
 }
 
 // Function to dynamically add new members to the member list
@@ -151,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-window.onbeforeunload = function(event) {
+window.onbeforeunload = function(event) { 
 
     event.preventDefault();
     event.returnValue = "Are you sure you want to leave this page? Unsaved changes will be lost.";
