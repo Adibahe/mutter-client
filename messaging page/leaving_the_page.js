@@ -60,7 +60,7 @@ function confirmLeave() {
 
 // On page load, set the user ID (replace with actual user logic)
 document.addEventListener('DOMContentLoaded', function() {
-    const userId = sessionStorage.getItem('userId') || 'User123';  // Replace 'User123' with dynamic value
+    const userId = sessionStorage.getItem('userId') || 'JoyBoy';  // Replace 'User123' with dynamic value
     document.getElementById('user-id').textContent = userId;
 });
 

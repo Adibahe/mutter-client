@@ -57,17 +57,29 @@ function addNewMessageToChat(message) {
     const chatMessages = document.getElementById('chat-messages');
 
     if (!document.getElementById(`message-${message.id}`)) {
-        const messageElement = document.createElement('div');
-        messageElement.id = `message-${message.id}`;
-        messageElement.className = message.sender === 'me' ? 'message from-me' : 'message from-them';
-        messageElement.innerHTML = `<span class="sender-label">${message.sender}</span> ${message.text}`;
+        const messageBox = document.createElement('div'); // Create a container for the message
+        const messageElement = document.createElement('div'); // Message text element
+        const messageSender = document.createElement('div'); // Sender label element
 
-        chatMessages.appendChild(messageElement);
+        messageBox.className = 'box-them'; // Class for styling
+        messageElement.className = message.sender === 'me' ? 'message from-me' : 'message from-them'; // Set message class based on sender
+
+        // Set message text and sender label
+        messageElement.innerHTML = `<div class="message-text">${message.text}</div>`;
+        messageSender.innerHTML = `<span class="sender-label">${message.sender}</span>`;
+
+        // Append sender label and message text to the message box
+        messageBox.appendChild(messageSender);
+        messageBox.appendChild(messageElement);
+
+        // Append the message box to the chat window
+        chatMessages.appendChild(messageBox);
 
         // Auto-scroll to the latest message
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 }
+
 
 // Initialize SSE connections for members and messages
 document.addEventListener('DOMContentLoaded', function() {
@@ -75,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchNewMessagesFromAPI();
 });
 
-// Function to send a message
 // Function to send a new message to the API
 async function postMessageToAPI(message) {
     try {
@@ -105,14 +116,18 @@ async function sendMessage() {
     if (messageText !== '') {
         const chatMessages = document.getElementById('chat-messages');
         const messageElement = document.createElement('div');
+        const messageSender = document.createElement('div');
+        const messageBox = document.createElement('div');
 
-        messageElement.className = 'message from-me'; // Class based on the sender
-        messageElement.innerHTML = `
-            <span class="sender-label">me</span>
-            <div class="message-text">${messageText}</div>`;
+        messageBox.className = 'box';
+        messageElement.className = 'message from-me';
+        messageElement.innerHTML = `<div class="message-text">${messageText}</div>`;
+        messageSender.innerHTML = `<span class="sender-label">me </span>`;
 
         // Append the message to the chat window
-        chatMessages.appendChild(messageElement);
+        messageBox.appendChild(messageSender);
+        messageBox.appendChild(messageElement);
+        chatMessages.appendChild(messageBox);
 
         // Clear input and auto-scroll to the latest message
         messageInput.value = '';
@@ -123,6 +138,7 @@ async function sendMessage() {
     }
 }
 
+
 // Allow sending messages by pressing Enter
 document.getElementById('message-input').addEventListener('keypress', function(event) {
     if (event.key === 'Enter') {
@@ -130,6 +146,7 @@ document.getElementById('message-input').addEventListener('keypress', function(e
     }
 });
 
+// Display the group name if it's available
 document.addEventListener('DOMContentLoaded', function() {
     const groupName = sessionStorage.getItem('groupName');
     console.log('Group name:', groupName);  // Debugging: check if groupName is stored
@@ -143,9 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
+// Warning before leaving the page
 window.onbeforeunload = function(event) {
-
     event.preventDefault();
     event.returnValue = "Are you sure you want to leave this page? Unsaved changes will be lost.";
 
@@ -156,3 +172,24 @@ window.onbeforeunload = function(event) {
     // Use navigator.sendBeacon to send the data
     navigator.sendBeacon(url, data);
 };
+
+// Toggle the sidebar and update the button's arrow direction
+document.getElementById('collapse-btn').addEventListener('click', function() {
+    const sidebar = document.querySelector('.sidebar');
+    const chatWindow = document.querySelector('.chat-window');
+
+    sidebar.classList.toggle('collapsed');
+    chatWindow.classList.toggle('expanded');
+
+    // Update button text arrow based on sidebar state
+    if (sidebar.classList.contains('collapsed')) {
+        this.textContent = '→'; // Right arrow when collapsed
+    } else {
+        this.textContent = '←'; // Left arrow when expanded
+    }
+});
+
+function toggleTheme() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+}
