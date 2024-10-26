@@ -1,56 +1,77 @@
 const URL = 'http://localhost:3000/events';
 
 // Function to set up SSE for members
+const eventsrcMember = new EventSource(URL + '/members');
+const eventsrcMessages = new EventSource(URL + '/messages');
 function fetchNewMembersFromAPI() {
-    const eventsrc = new EventSource(URL + '/members');
-
-    eventsrc.onmessage = function(event) {
+    
+    eventsrcMember.onmessage = function(event) {
         const data = JSON.parse(event.data);
         console.log('Added new member:', data.member);
 
         // Call function to update the UI with the new member
-        addNewMemberToList(data.member);
+        addMemberToLobby(data.member);
     };
 
-    eventsrc.onerror = function(error) {
+    eventsrcMember.onerror = function(error) {
         console.error('Error with SSE connection (members):', error);
     };
+
 }
 
 // Function to set up SSE for messages
 function fetchNewMessagesFromAPI() {
-    const eventsrc = new EventSource(URL + '/messages');
+    
 
-    eventsrc.onmessage = function(event) {
+    eventsrcMessages.onmessage = function(event) {
         const data = JSON.parse(event.data);
         console.log('Received new message:', data.message);
 
         addNewMessageToChat(data.message);
     };
 
-    eventsrc.onerror = function(error) {
+    eventsrcMessages.onerror = function(error) {
         console.error('Error with SSE connection (messages):', error);
     };
 }
 
-// Function to dynamically add new members to the member list
-function addNewMemberToList(member) {
-    const memberList = document.getElementById('member-list');
+function addNewMemberToList(members) {
+    const memberListSidebar = document.getElementById('member-list');
+    
+    // Clear existing members in the sidebar
+    memberListSidebar.innerHTML = '';
+    const memberItem = document.createElement('li');
 
-    if (!document.getElementById(`member-${member.id}`)) {
-        const memberElement = document.createElement('li');
-        memberElement.id = `member-${member.id}`;
-        memberElement.innerHTML = `
-            <div class="member-icon"></div> 
-            <span>${member.name}</span>
-        `;
-        memberList.appendChild(memberElement);
+    const memberIcon = document.createElement('div');
+    memberIcon.classList.add('member-icon');
+    const memberName = document.createElement('span');
+    memberName.textContent = 'me';
+    memberIcon.textContent = 'me';
 
-        // Update the member count
-        const memberCount = memberList.children.length;
-        document.getElementById('member-count').innerText = `${memberCount} members`;
-    }
+    memberItem.appendChild(memberIcon);
+    memberItem.appendChild(memberName);
+
+    memberListSidebar.appendChild(memberItem);
+
+    members.forEach(function(member) {
+        const memberItem = document.createElement('li');
+
+        const memberIcon = document.createElement('div');
+        memberIcon.classList.add('member-icon');
+        const memberName = document.createElement('span');
+        memberName.textContent = member.name;
+        memberIcon.textContent = member.name.slice(0,2);
+        memberItem.appendChild(memberIcon);
+        memberItem.appendChild(memberName);
+
+        memberListSidebar.appendChild(memberItem);
+    });
+    // Update the member count
+    const memberCount = memberListSidebar.children.length;
+    document.getElementById('member-count').innerText = memberCount+' members';
 }
+
+
 
 // Function to dynamically add new messages to the chat window
 function addNewMessageToChat(message) {
@@ -84,7 +105,6 @@ function addNewMessageToChat(message) {
 // Initialize SSE connections for members and messages
 document.addEventListener('DOMContentLoaded', function() {
     fetchNewMembersFromAPI();
-    fetchNewMessagesFromAPI();
 });
 
 // Function to send a new message to the API

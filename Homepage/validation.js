@@ -30,4 +30,5 @@ function validate(button){
         window.alert(alertmessage);
         return false;
     }
+    return true;
 }

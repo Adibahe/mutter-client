@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby</title>
+    <link rel="stylesheet" href="lobby.css">
+</head>
+<body>
+    <div id="lobby-overlay" class="lobby-overlay">
+        <div class="lobby-container">
+            <h2 id="group-name"></h2>
+            <ul id="member-list-lobby">
+                <!-- Members will be added here -->
+            </ul>
+            <div class="button-container">
+                <button id="start-button" onclick="startMeeting()">Start</button>
+                <button id="leave-button" onclick="leaveGroup()">Leave</button>
+            </div>
+        </div>
+    </div>
+    <script src="lobby.js"></script>
+</body>
+</html>

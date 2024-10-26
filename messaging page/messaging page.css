@@ -58,9 +58,15 @@ body, html {
 .member-icon {
     width: 40px;
     height: 40px;
-    background-color: #ecf0f1;
-    border-radius: 5px;
+    background-color: #58b3d6;
+    color: white;
+    font-size: large;
+    border-radius: 15px;
     margin-right: 10px;
+    display: flex;            
+    justify-content: center;   
+    align-items: center;        
+    text-align: center; 
 }
 
 /* Chat Window Styling */
@@ -71,7 +77,7 @@ body, html {
     background-image: url('image-asset.jpeg'); /* Replace with your image path */
     background-size: cover; /* Ensure the image covers the whole window */
     background-position: center;
-    filter: contrast(0.8); /* Adjust contrast (0.8 reduces contrast) */
+    filter: contrast(0.9); /* Adjust contrast (0.8 reduces contrast) */
     opacity: 0.9; /* Make the background slightly transparent */
     padding: 20px;
     border-radius: 50px;
@@ -98,13 +104,14 @@ body, html {
 }
 
 .group-icon {
-    width: 40px;  /* Set the width */
-    height: 40px; /* Set the height */
-    border-radius: 50%; /* Circular shape */
-    background-color: #dfe6e9; /* Fallback color */
-    margin-right: 10px;
+    width: 40px;            
+    height: 40px;               
+    border-radius: 50%;        
+    background-color: #dfe6e9;  
+    background-image: url('8184182.png'); 
+    background-size: cover;   
+    margin-right: 10px;         
 }
-
 /* Group Details */
 .group-details h3 {
     margin: 0;
@@ -155,12 +162,13 @@ body, html {
 /* Messages from others */
 
 .from-them {
-    background-color: #f1a0a0; /* Background color for other members */
+    background-color: #ffffff; /* Background color for other members */
     color: black;
     align-self: flex-start; /* Align to the left */
     text-align: left; /* Align text to the left */
     padding: 10px; /* Ensure there's padding for visibility */
     border-radius: 8px; /* Optional: round the corners */
+    filter: contrast(0.9);
 }
 
 /* Messages from me */
@@ -295,28 +303,9 @@ body, html {
 .collapse-btn:hover {
     background-color: #2980b9;
 }
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: #181818; /* Dark background */
-    color: #ffffff; /* Light text color */
-}
-
-/* Modify chat window styles if necessary */
-.chat-window {
-    background-color: rgba(255, 255, 255, 0.9); /* Light background */
-}
-
-body.dark-mode .chat-window {
-    background-color: rgba(30, 30, 30, 0.8); /* Dark background for chat window */
-}
 
 /* Adjust button and input styles for dark mode */
 input, button {
     background-color: #ffffff; /* Light mode button/input */
     color: #333; /* Light mode text */
-}
-
-body.dark-mode input, body.dark-mode button {
-    background-color: #444; /* Dark mode button/input */
-    color: #ffffff; /* Dark mode text */
 }

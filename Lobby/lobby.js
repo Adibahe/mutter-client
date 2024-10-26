@@ -1,27 +1,84 @@
-// Example of member data
-const members = [
-    { id: 1, name: 'Alice' },
-    { id: 2, name: 'Bob' },
-    // Additional members can be added here
-];
+// Fetch group name from sessionStorage
+document.addEventListener('DOMContentLoaded', function () {
+    const groupName = sessionStorage.getItem('groupName');
+    const groupNameElement = document.getElementById('group-name');
+    if (groupName) {
+        groupNameElement.textContent = `Group: ${groupName}`;
+    }
 
-// Function to add members to the lobby
-function addMembers() {
-    const memberList = document.getElementById('members');
+    // Fetch members from the API and display them
+    fetchGroupMembers();
 
-    members.forEach(member => {
-        const listItem = document.createElement('li');
-        listItem.textContent = member.name;
-        memberList.appendChild(listItem);
-    });
+    // Regularly check for meeting start event
+    checkForMeetingStart();
+});
 
-    // Enable the start session button if members are present
-    if (members.length > 0) {
-        document.getElementById('start-session-button').disabled = false;
+function addMemberToLobby(member) {
+    const memberList = document.getElementById('lobby-member-list');
+
+    // Validate member object
+    if (member && member.id && member.name) {
+        // Check if member already exists
+        if (!document.getElementById(`member-${member.id}`)) {
+            const memberItem = document.createElement('li');
+            memberItem.id = `member-${member.id}`; // Give each member a unique ID
+            memberItem.textContent = member.name;
+            console.log(member.name);
+            memberList.appendChild(memberItem);
+        }
+    } else {
+        console.error('Invalid member object:', member);
+    }
+
+    if (members.length > 10) {
+        memberList.style.maxHeight = '200px';
+        memberList.style.overflowY = 'auto';
+    } else {
+        memberList.style.maxHeight = '';
+        memberList.style.overflowY = '';
     }
 }
+function updateMemberList() {
+    const memberList = document.getElementById('lobby-member-list');
+    const members = Array.from(memberList.children).map(li => ({
+        id: li.id.replace('member-', ''), // Extract the id
+        name: li.textContent // Get the name
+    }));
 
-// Call the function to add members on page load
-window.onload = () => {
-    addMembers();
-};
+    // Call addNewMemberToList with the updated members array
+    addNewMemberToList(members);
+}
+
+// Start the meeting
+function startMeeting() {
+    // Discard lobby and reveal messaging page
+    document.getElementById('lobby-overlay').style.display = 'none';
+    updateMemberList();
+    stopFetchingMembers();
+}
+
+// Leave group logic
+function leaveGroup() {
+    // Your leave group logic here (calls to existing API function)
+    confirmLeave(); // Reuse the function from messaging page
+}
+
+// Stop fetching members after the lobby is closed
+function stopFetchingMembers() {
+    // Close EventSource and stop receiving new members
+    eventsrcMember.close();
+    fetchNewMessagesFromAPI();
+}
+
+// Regularly check for the "start meeting" event
+function checkForMeetingStart() {
+    const URL = 'http://localhost:3000/events/start';
+
+    const startEventSource = new EventSource(URL);
+    startEventSource.onmessage = function (event) {
+        const meetingStarted = JSON.parse(event.data).start;
+        if (meetingStarted) {
+            startMeeting();
+        }
+    };
+}

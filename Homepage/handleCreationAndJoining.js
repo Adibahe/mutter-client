@@ -1,14 +1,15 @@
 
     function handleCreateGroup(button) {
-        validate(button);
+        if (validate(button)){
 
         const groupName = document.getElementById('group-name').value.trim();
 
         if (groupName) {
             sessionStorage.setItem('groupName', groupName);
             window.open('../messaging page/messaging page.html');
-
         }
+        }
+        groupName.value = "";
     }
 
     function handleJoinGroup(button) {
