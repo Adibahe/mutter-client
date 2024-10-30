@@ -13,17 +13,16 @@
     }
 
     function handleJoinGroup(button) {
-        validate(button);
-            
-            fetch('https://your-api-url.com/group')
-                .then(response => response.json())
-                .then(data => {
-                    sessionStorage.setItem('groupName', data.groupName); // Store the group name from the API
-                    window.open('../messaging page/messaging page.html',true); // Redirect to the messaging page
-                })
-                .catch(error => {
-                    console.error('Error fetching group name:', error);
-                    alert('Failed to fetch group name from the API');
-                });
-        }
-
+        if(validate(button)){
+    
+        // Get the group code from the input field
+        const groupCode = document.getElementById('group-code').value;
+    
+        // Store the group code in session storage
+        sessionStorage.setItem('groupCode', groupCode);
+    
+        // Redirect to the messaging page
+        window.open('../messaging page/messaging page.html', true);
+    }
+}
+    
