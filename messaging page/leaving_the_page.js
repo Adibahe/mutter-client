@@ -7,17 +7,6 @@ function toggleInfoMenu() {
 // Function to confirm leaving the group
 function confirmLeave() {
     const confirmation = confirm("Are you sure you want to leave the group?");
-    if (confirmation) {
-        sessionStorage.clear();
-        window.close()
-        window.location.href = '../Homepage/homepage.html';  // Close the window if the user confirms
-    }
-    const menu = document.getElementById('info-menu');
-    menu.style.display = 'none';
-}
-
-/*function confirmLeave() {
-    const confirmation = confirm("Are you sure you want to leave the group?");
     
     if (confirmation) {
         // Prepare the data to send with the API call (adjust this as per your API)
@@ -27,7 +16,7 @@ function confirmLeave() {
         };
 
         // Make an API call to inform the server about leaving the group
-        fetch('https://your-api-endpoint.com/leave-group', {  // Replace with your actual API endpoint
+        fetch('https://localhost:3000', {  // Replace with your actual API endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -56,7 +45,7 @@ function confirmLeave() {
     const menu = document.getElementById('info-menu');
     menu.style.display = 'none';
 }
-*/
+
 
 // On page load, set the user ID (replace with actual user logic)
 document.addEventListener('DOMContentLoaded', function() {

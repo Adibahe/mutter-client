@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 
 // Use the path module to resolve the absolute path for "messaging page"
-app.use(express.static(path.resolve(__dirname, '../../../mutter-Client'))); // Adjust path as needed
+app.use(express.static(path.resolve(__dirname, '../../../mutter-client'))); // Adjust path as needed
 
 // List of Straw Hat Crew members
 const strawHatCrew = [
@@ -78,6 +78,24 @@ app.get('/events/messages', (req, res) => {
         }
     };
 
+    // SSE endpoint for join or create event
+app.get('/events/join-or-create', (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    // Simulate a join or create action for demonstration purposes
+    const action = Math.random() < 0.5 ? 'join' : 'create';
+
+    setTimeout(() => {
+        res.write(`data: ${JSON.stringify({ action })}\n\n`);
+    }, 1000); // Send after 1 second
+
+    req.on('close', () => {
+        res.end();
+    });
+});
+
     // Send a new message every 3 seconds
     const interval = setInterval(() => {
         sendNewMessage();
@@ -108,5 +126,5 @@ app.listen(PORT, async () => {
 
     // Dynamically import the open module
     const open = await import('open');
-    open.default(`http://localhost:${PORT}/Homepage/index.html`);
+    open.default(`http://localhost:${PORT}/messaging page/messaging page.html`);
 });
