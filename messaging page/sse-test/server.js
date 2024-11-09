@@ -94,7 +94,16 @@ app.get('/events/join-or-create', (req, res) => {
     req.on('close', () => {
         res.end();
     });
-});
+    });
+
+    app.post('/events/leave', (req, res) => {
+        console.log('User has left group');
+        
+        // Respond to the client
+        res.status(200).json({ message: 'Leave group event received successfully.' });
+    });
+    
+    
 
     // Send a new message every 3 seconds
     const interval = setInterval(() => {

@@ -4,39 +4,31 @@ function toggleInfoMenu() {
     menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
 }
 
-// Function to confirm leaving the group
 function confirmLeave() {
     const confirmation = confirm("Are you sure you want to leave the group?");
     
     if (confirmation) {
-        // Prepare the data to send with the API call (adjust this as per your API)
-        const leaveData = {
-            userId: sessionStorage.getItem('userId'),  // Assume userId is stored in sessionStorage
-            groupId: sessionStorage.getItem('groupId') // Assume groupId is stored in sessionStorage
-        };
-
         // Make an API call to inform the server about leaving the group
-        fetch('https://localhost:3000', {  // Replace with your actual API endpoint
+        fetch('http://localhost:3000/events/leave', {  // Updated to match server endpoint
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(leaveData)
+            }
         })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to leave the group');
             }
-            return response.json();  // Optional, if you need to handle response data
+            return response.json();
         })
         .then(data => {
-            // On success, clear the session and navigate away
+            console.log(data.message);  // Logs the server's confirmation message
             sessionStorage.clear();
             window.close();
             window.location.href = '../Homepage/homepage.html';  // Redirect to the homepage
         })
         .catch(error => {
-            console.error('Error:', error);  // Log any errors in the API call
+            console.error('Error:', error);
             alert('An error occurred while leaving the group. Please try again.');
         });
     }
@@ -45,6 +37,8 @@ function confirmLeave() {
     const menu = document.getElementById('info-menu');
     menu.style.display = 'none';
 }
+
+
 
 
 // On page load, set the user ID (replace with actual user logic)
