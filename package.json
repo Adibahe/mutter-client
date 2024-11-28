@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "node src/sse-test/server.js"
+  },
+  "dependencies": {
+    "open": "^10.1.0"
+  }
+}

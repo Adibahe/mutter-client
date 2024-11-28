@@ -1,0 +1,311 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Full-screen layout */
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* A cleaner font */
+    background-color: #f4f4f9; /* Light background for the body */
+}
+
+/* Chat App Layout */
+.chat-app {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styling with rounded corners */
+.sidebar {
+    width: 25%; /* Standard width */
+    background-color: #ffffff;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    position: relative; /* To position the button relative to sidebar */
+    transition: width 0.3s ease; /* Smooth transition for collapsing */
+}
+
+/* Sidebar Header */
+.sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 20px; /* Increased font size for better readability */
+    color: #333;
+}
+
+/* Sidebar Members List */
+.sidebar ul {
+    list-style-type: none;
+}
+
+.sidebar ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s; /* Smooth hover transition */
+    border-bottom: 1px solid #bdc3c7; /* Add separator line */
+    color: black;
+    font-weight: bold;
+}
+
+/* Member Icon */
+.member-icon {
+    width: 40px;
+    height: 40px;
+    background-color: #58b3d6;
+    color: white;
+    font-size: large;
+    border-radius: 15px;
+    margin-right: 10px;
+    display: flex;            
+    justify-content: center;   
+    align-items: center;        
+    text-align: center; 
+}
+
+/* Chat Window Styling */
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    background-image: url('../images/image-asset.jpeg'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the whole window */
+    background-position: center;
+    filter: contrast(0.9); /* Adjust contrast (0.8 reduces contrast) */
+    opacity: 0.9; /* Make the background slightly transparent */
+    padding: 20px;
+    border-radius: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
+/* Group Header */
+.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #cad0d394; /* Light border at the bottom */
+    background-color:#ffffff ;
+    border-radius:20px;
+}
+
+/* Group Info */
+.group-info {
+    display: flex;
+    align-items: center;
+}
+
+.group-icon {
+    width: 40px;            
+    height: 40px;               
+    border-radius: 50%;        
+    background-color: #dfe6e9;  
+    background-image: url('..\images\8184182.png'); 
+    background-size: cover;   
+    margin-right: 10px;         
+}
+/* Group Details */
+.group-details h3 {
+    margin: 0;
+    font-size: 18px; /* Increased font size for better visibility */
+    color: #333;
+}
+
+.group-details p {
+    margin: 0;
+    font-size: 14px; /* Slightly larger font for clarity */
+    color: #3498db;
+}
+
+/* Chat Messages Area */
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+.box {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-end; /* Align all items to the right */
+    margin-bottom: 10px; /* Space between messages */
+}
+
+.box-them {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align all items to the right */
+    margin-bottom: 10px; /* Space between messages */
+}
+
+/* Individual Messages */
+.message {
+    min-width: 100px;  /* Minimum width for message box */
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 50%; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Messages from others */
+
+.from-them {
+    background-color: #ffffff; /* Background color for other members */
+    color: black;
+    align-self: flex-start; /* Align to the left */
+    text-align: left; /* Align text to the left */
+    padding: 10px; /* Ensure there's padding for visibility */
+    border-radius: 8px; /* Optional: round the corners */
+    filter: contrast(0.9);
+}
+
+/* Messages from me */
+.from-me {
+    background-color: #00A3FF;
+    color: white;
+    align-self: flex-end; /* Align to the right */
+}
+
+.sender-label{
+    font-size: 12px;
+    color: #0e0303; /* Change to white or other color for visibility */
+    margin-bottom: 5px; /* Space between sender label and message text */
+    font-weight: bold; /* Make the label bold */
+}
+
+.message-text {
+    word-wrap: break-word; /* Ensure long words wrap properly */
+}
+/* Chat Input Section */
+.chat-input {
+    display: flex;
+    padding: 10px;
+    
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 20px;
+    margin-right: 10px;
+    transition: border-color 0.3s; /* Smooth border transition */
+    box-shadow: none;
+}
+
+.chat-input input:focus {
+    border-color: #3498db; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+.chat-input button {
+    padding: 10px;
+    background-color: transparent; /* Make the button background transparent */
+    border: none;
+    cursor: pointer;
+}
+.send-icon {
+    width: 27px;  /* Adjust the size of the airplane logo */
+    height: 27px;
+}
+/* Additional CSS for message text */
+.message-text {
+    word-wrap: break-word; /* Ensure long words wrap properly */
+}
+/* Three-dot button styling */
+.info-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+}
+
+/* Dropdown menu styling */
+.info-menu {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    min-width: 215px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.info-menu p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.leave-btn {
+    margin-top: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.leave-btn:hover {
+    background-color: #c0392b;
+}
+/* Collapse button styling */
+.collapse-btn {
+    position: absolute;
+    top: 50%;
+    right: 74%; /* Positioned just outside the sidebar */
+    transform: translateY(-50%);
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%; /* Rounded button */
+    cursor: pointer;
+    transition: background-color 0.3s, right 0.3s ease; /* Smooth transitions */
+    z-index: 1;
+}
+
+/* When the sidebar is collapsed */
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Adjust the position of the collapse button when the sidebar is collapsed */
+.sidebar.collapsed + .collapse-btn {
+    right: 98.5%; /* Move the button further out when collapsed */
+}
+
+/* Expanded chat window when sidebar is collapsed */
+.chat-window.expanded {
+    width: 100%;
+    transition: width 0.3s ease;
+}
+/* Hover Effect for the collapse button */
+.collapse-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Adjust button and input styles for dark mode */
+input, button {
+    background-color: #ffffff; /* Light mode button/input */
+    color: #333; /* Light mode text */
+}
