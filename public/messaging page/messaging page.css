@@ -108,7 +108,7 @@ body, html {
     height: 40px;               
     border-radius: 50%;        
     background-color: #dfe6e9;  
-    background-image: url('..\images\8184182.png'); 
+    background-image: url('../images/8184182.png'); 
     background-size: cover;   
     margin-right: 10px;         
 }

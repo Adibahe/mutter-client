@@ -7,6 +7,18 @@ This repository is intended only for viewing and suggesting improvements to the 
 ## Project Overview
 
 Mutter is a decentralized messaging platform that focuses on anonymity, and secure communication. Unlike traditional messaging applications, Mutter uses ephemeral identities and ensures all message records and identities are erased after each session, promoting a more secure and private messaging environment.
+### Lobby
+<p align="center">
+  <img src="public/images/Screenshot 2024-11-28 084334.png" alt="Image 1" width="45%">
+  <img src="public/images/Screenshot 2024-11-28 084549.png" alt="Image 2" width="45%">
+</p>
+
+### Messaging page
+<p align="center">
+  <img src="public/images/Screenshot 2024-11-28 084407.png" alt="Image 1" width="45%">
+  <img src="public/images/Screenshot 2024-11-28 084428.png" alt="Image 2" width="45%">
+</p>
+
 ## Note
 This is just the fornt end work so it runs on the **testing environment** you can't use it actual work, the **src/sse-test/server.js** file contains a program which starts the test with alredy hard wired chats.
 ## Features of [Mutter](https://codeberg.org/cloakwise/mutter).
